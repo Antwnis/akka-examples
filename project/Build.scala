@@ -36,6 +36,13 @@ object AkkaExamplesBuild extends Build {
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test"
   )
 
+  val loggingDependencies = List(
+    "org.slf4j" % "slf4j-jcl" % "1.7.5",
+    "org.slf4j" % "slf4j-api" % "1.7.5",
+    "org.slf4j" % "slf4j-log4j12" % "1.7.5",
+    "ch.qos.logback" % "logback-classic" % "1.0.9"
+  )
+
   // Group for spray.io
   val sprayDependencies = List(
     "io.spray" % "spray-client" % sprayVersion,
@@ -52,7 +59,7 @@ object AkkaExamplesBuild extends Build {
   )
 
   //removed: ++ assemblySettings ++ scalariformSettings
-  val sharedSettings = Project.defaultSettings ++ assemblySettings ++ Seq(
+  val sharedSettings = Project.defaultSettings ++ assemblySettings ++  Seq(
     organization := "justexamples",
     scalaVersion := "2.10.4",
     scalacOptions ++= Seq("-unchecked", "-deprecation"),
@@ -70,21 +77,32 @@ object AkkaExamplesBuild extends Build {
       day1
   )
   lazy val day1 = module("day1").settings(
-    libraryDependencies ++= testDependencies ++ akkaDependencies ++ kamonDependencies ++ testDependencies ++
+    libraryDependencies ++= testDependencies ++ akkaDependencies ++ kamonDependencies ++ testDependencies ++ loggingDependencies ++
       Seq(
       "io.spray" %% "spray-json" % "1.2.6",
-       "org.json4s" %% "json4s-native" % "3.2.10",
       // To remove
-      "com.google.code.gson" % "gson" % "2.2.4",
-      "org.perf4j" % "perf4j" % "0.9.16",
       "com.typesafe" % "config" % "1.2.1",
       "com.typesafe" %% "scalalogging-slf4j" % "1.1.0",
       "ch.qos.logback" % "logback-classic" % "1.1.1",
-      "org.slf4j" % "slf4j-api" % "1.7.5",
       "com.javadocmd" % "simplelatlng" % "1.3.0",
-      "net.sf.trove4j" % "trove4j" % "2.0.2",
-      "org.mongodb" %% "casbah" % "2.7.2"
+      "net.sf.trove4j" % "trove4j" % "2.0.2"
     )
+  )
+  lazy val day2 = module("day2").settings(
+    libraryDependencies ++= testDependencies ++ akkaDependencies ++ kamonDependencies ++ testDependencies ++ loggingDependencies ++
+      Seq(
+        "io.spray" %% "spray-json" % "1.2.6",
+        "org.json4s" %% "json4s-native" % "3.2.10",
+        // To remove
+        "com.google.code.gson" % "gson" % "2.2.4",
+        "org.perf4j" % "perf4j" % "0.9.16",
+        "com.typesafe" % "config" % "1.2.1",
+        "com.typesafe" %% "scalalogging-slf4j" % "1.1.0",
+        "ch.qos.logback" % "logback-classic" % "1.1.1",
+        "com.javadocmd" % "simplelatlng" % "1.3.0",
+        "net.sf.trove4j" % "trove4j" % "2.0.2",
+        "org.mongodb" %% "casbah" % "2.7.2"
+      )
   )
 
   // Wrapper method

@@ -1,7 +1,8 @@
-import akka.actor.{Props, ActorSystem}
+import akka.actor.{ActorSystem, Props}
 
-class Runner extends App {
+object Runner extends App {
 
+  println("Running ActorSystem(Day1System)")
   calculate(nrOfWorkers = 10, nrOfElements = 10, nrOfMessages = 10)
 
   // actors and messages ...
@@ -12,11 +13,10 @@ class Runner extends App {
     val system = ActorSystem("Day1System")
 
     // create the result listener, which will print the result and shutdown the system
-//    val listener = system.actorOf(Props[Listener], name = "listener")
+    val accountant = system.actorOf(Props[Accountant], name = "Accountant")
 
     // create the master
-    val master = system.actorOf(Props(new Master()), //, listener)),
-      name = "master")
+    val master = system.actorOf(Props(new Master(10,10, accountant)),name = "master")
 
     // start the calculation
     master ! LetTheWorkStart
